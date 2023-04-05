@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Australian State/Territory Speedcubing Rankings</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/cubing-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        tr:nth-child(even) {
+            background-color: #e5e5e5;
+        }
+        th {
+            font-weight: normal;
+            padding: 2px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
+        <h1 class="font-medium text-lg text-blue-700">Australian State/Territory Speedcubing Rankings</h1>
+        <div class="ml-auto">
+            <button class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
+                <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
+                <p>Log in</p>
+            </button>
+        </div>
+    </nav>
+    <div class="flex flex-col h-screen justify-center items-center">
+        <div class="w-1/2">
+            <label class="text-neutral-600">State/Territory:</label>
+            <button class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200">
+                Victoria
+            </button>
+            <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-333"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-222"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-444"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-555"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-666"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-777"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-333bf"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-333fm"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-333oh"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-clock"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-minx"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-pyram"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-skewb"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-sq1"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-444bf"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-555bf"></span>
+                </button>
+                <button class="focus:text-black hover:text-neutral-400">
+                    <span class="cubing-icon event-333mbf"></span>
+                </button>
+            </div>
+            <div class="flex space-x-3 mb-3">
+                <div class="flex">
+                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
+                        Single
+                    </button>
+                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
+                        Average
+                    </button>
+                </div>
+                <div class="flex">
+                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
+                        All
+                    </button>
+                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm hover:bg-blue-700">
+                        Male
+                    </button>
+                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
+                        Female
+                    </button>
+                </div>
+                <div class="flex">
+                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
+                        People
+                    </button>
+                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
+                        Results
+                    </button>
+                </div>
+            </div>
+            <table class="w-full text-left">
+                <tr>
+                    <th class="font-bold">#</th>
+                    <th class="font-bold">Name</th>
+                    <th class="font-bold">Result</th>
+                    <th class="font-bold">Competition</th>
+                    <th class="font-bold">Solves</th>
+                </tr>
+                <tr class="font-normal">
+                    <th>1</th>
+                    <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/2019HERR14">William Herring</a></th>
+                    <th>2.69</th>
+                    <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/competitions/SpeedcubingatSeaworks2023">Speedcubing at Seaworks 2023</a></th>
+                    <th class="space-x-6"><span></span>(1.94)<span></span>(4.09)<span></span>2.72<span></span>2.94<span></span>2.42</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">
+        <p>© William Herring 2023</p>
+        <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
+    </div>
+</body>
+</html>

@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Redirecting...</title>
+    <script>
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+          get: (searchParams, prop) => searchParams.get(prop),
+        });
+        let redirectUrl = params.redirectUrl
+        window.location.href = redirectUrl;
+    </script>
 </head>
 <body>
-    {% if session['token'] %}
-        <h1>Welcome {{ session['token'] }}!</h1>
-    {% else %}
-        No token
-    {% endif %}
+    Redirecting...
 </body>
 </html>

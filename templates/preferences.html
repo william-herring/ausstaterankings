@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Preferences</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/cubing-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        tr:nth-child(even) {
+            background-color: #e5e5e5;
+        }
+        th {
+            font-weight: normal;
+            padding: 2px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
+        <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State/Territory Speedcubing Rankings</a>
+        <a href="/" class="mr-6 hover:underline">Rankings</a>
+        <a href="/faq" class="hover:underline">FAQ</a>
+        <div class="ml-auto">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=tghESRbf5HsdGkBPu_gf1BQIIcFbDHz-edk_fvL-lLo&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fpreferences&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
+                <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
+                <p>Log in</p>
+            </a>
+        </div>
+    </nav>
+    <div class="flex flex-col h-screen justify-center items-center">
+        <div class="text-neutral-600 w-1/2">
+            <h1 class="text-2xl font-bold mb-3">Preferences</h1>
+            <p>{{token}}</p>
+        </div>
+    </div>
+    <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">
+        <p>© William Herring 2023</p>
+        <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
+    </div>
+</body>
+</html>

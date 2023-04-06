@@ -22,13 +22,13 @@
 <body>
     <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
         <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State/Territory Speedcubing Rankings</a>
-        <a href="/" class="mr-6 hover:underline">Results</a>
+        <a href="/" class="mr-6 hover:underline">Rankings</a>
         <a href="/faq" class="hover:underline">FAQ</a>
         <div class="ml-auto">
-            <button class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=tghESRbf5HsdGkBPu_gf1BQIIcFbDHz-edk_fvL-lLo&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fpreferences&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
                 <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
                 <p>Log in</p>
-            </button>
+            </a>
         </div>
     </nav>
     <div class="flex flex-col h-screen justify-center items-center">
@@ -40,6 +40,11 @@
             <br>
             <h2 class="text-lg font-semibold">How do I change my state/territory?</h2>
             <p>If you have moved to a different state/territory, you can update your residence in <a class="underline" href="/preferences">user preferences</a>.</p>
+            <br>
+            <h2 class="text-lg font-semibold">I live in Australia but do not represent the country on my WCA profile. How can I be added to the rankings?</h2>
+            <p>Currently you can only record your state residence if you have Australia listed as your country in the WCA. However, if you live in Australia, please <a class="underline" href="mailto:william.herring.au@gmail.com">
+                send me an email
+            </a> and I will add you to the rankings.</p>
             <br>
             <h2 class="text-lg font-semibold">Why aren't the results up to date?</h2>
             <p>To avoid querying the WCA database on every visit, results are updated every Wednesday. Generally, this will mean that results will be updated pretty soon after a competition's

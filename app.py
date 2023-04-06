@@ -1,28 +1,44 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import os
 import requests
+
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY')
+
+
+def get_user_data():
+    if session['token']:
+        user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
+                                 headers={'Authorization': f'Bearer {session["token"]}'}).json()['me']
+    else:
+        user_data = {}
+    return user_data
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', **get_user_data())
 
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('faq.html', **get_user_data())
 
 
 @app.route('/preferences')
 def preferences():
+    return render_template('preferences.html', **get_user_data())
+
+
+@app.route('/account-redirect')
+def account_redirect():
     code = request.args.get('code')
     token = requests.post('https://www.worldcubeassociation.org/oauth/token', data={
         'grant_type': 'authorization_code',
         'code': code,
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET'),
-        'redirect_uri': 'http://localhost:5000/preferences'
+        'redirect_uri': 'http://localhost:5000/account-redirect'
     }).json()['access_token']
-    print(token)
-    return render_template('preferences.html', token=token)
+    session['token'] = token
+    return render_template('account-redirect.html', token=token)

@@ -7,14 +7,14 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 
 def get_user_data():
-    if session['token']:
-        try:
-            user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
-                                     headers={'Authorization': f'Bearer {session["token"]}'}).json()['me']
-        except KeyError:
-            user_data = {}
-    else:
+    try:
+        token = session["token"]
+        user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
+                                 headers={'Authorization': f'Bearer {token}'}).json()['me']
+        print(user_data)
+    except KeyError:
         user_data = {}
+
     return user_data
 
 

@@ -26,7 +26,10 @@
         <a href="/faq" class="hover:underline">FAQ</a>
         <div class="ml-auto">
             {% if name %}
-            <a href="/preferences" class="hover:underline">{{name}}</a>
+            <a href="/preferences" class="flex items-center space-x-3 hover:underline">
+                <img class="object-cover h-8 w-8 rounded-full" src="{{avatar['thumb_url']}}">
+                <p>{{name}}</p>
+            </a>
             {% else %}
             <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=tghESRbf5HsdGkBPu_gf1BQIIcFbDHz-edk_fvL-lLo&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Faccount-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
                 <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">

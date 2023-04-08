@@ -4,6 +4,8 @@ import requests
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 def get_user_data():
@@ -11,7 +13,6 @@ def get_user_data():
         token = session["token"]
         user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
                                  headers={'Authorization': f'Bearer {token}'}).json()['me']
-        print(user_data)
     except KeyError:
         user_data = {}
 

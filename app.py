@@ -1,11 +1,19 @@
 from flask import Flask, render_template, request, session
 import os
 import requests
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+from models import Person
+
+with app.app_context():
+    db.create_all()
+    db.session.commit()
 
 
 def get_user_data():
@@ -21,7 +29,8 @@ def get_user_data():
 
 @app.route('/')
 def index():
-    return render_template('index.html', **get_user_data())
+    persons = Person.query.all()
+    return render_template('index.html', **get_user_data(), persons=persons)
 
 
 @app.route('/faq')

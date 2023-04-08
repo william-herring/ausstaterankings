@@ -1,9 +1,4 @@
-from flask import request, url_for, redirect
-from flask_sqlalchemy import SQLAlchemy
-from app import app
-from sqlalchemy.sql import func
-
-db = SQLAlchemy(app)
+from app import db
 
 
 class Person(db.Model):

@@ -16,31 +16,20 @@ with app.app_context():
     db.session.commit()
 
 
-def get_user_data():
-    try:
-        token = session["token"]
-        user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
-                                 headers={'Authorization': f'Bearer {token}'}).json()['me']
-    except KeyError:
-        user_data = {}
-
-    return user_data
-
-
 @app.route('/')
 def index():
     persons = Person.query.all()
-    return render_template('index.html', **get_user_data(), persons=persons)
+    return render_template('index.html', persons=persons)
 
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html', **get_user_data())
+    return render_template('faq.html')
 
 
 @app.route('/preferences')
 def preferences():
-    return render_template('preferences.html', **get_user_data())
+    return render_template('preferences.html')
 
 
 @app.route('/account-redirect')
@@ -55,4 +44,7 @@ def account_redirect():
         'redirect_uri': 'http://localhost:5000/account-redirect?redirectUrl=' + request.args.get('redirectUrl')
     }).json()['access_token']
     session['token'] = token
-    return render_template('account-redirect.html', token=token)
+    user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
+                             headers={'Authorization': f'Bearer {token}'}).json()['me']
+    session['user'] = {'name': user_data['name'], 'avatar': user_data['avatar']['thumb_url']}
+    return render_template('account-redirect.html')

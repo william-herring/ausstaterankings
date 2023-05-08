@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request, session
 import os
 import requests
@@ -18,8 +20,19 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    persons = Person.query.all()
-    return render_template('index.html', persons=persons)
+    results = Result.query.filter(Result.event == '333', Result.person.has(state='Victoria')).order_by(Result.single_rank.desc()).limit(100)
+    parsed_results = []
+    rank = 1
+    for r in results:
+        parsed_results.append({
+            'rank': rank,
+            'name': r.person.name,
+            'wca_id': r.person.wca_id,
+            'time': r.single
+        })
+        rank += 1
+    print(parsed_results)
+    return render_template('index.html', rankings=parsed_results)
 
 
 @app.route('/faq')
@@ -60,14 +73,15 @@ def account_redirect():
         raw_results = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{user_data["wca_id"]}').json()[
             'personal_records']
         results = []
+        print(raw_results.keys(), len(raw_results.keys()))
         for r in raw_results.keys():
-            print(r['single']['best'])
+            print(raw_results[r]['single']['best'])
             result = Result(
                 event=r,
-                single=r['single']['best'],
-                average=r['average']['best'],
-                single_rank=r['single']['world_rank'],
-                average_rank=r['average']['world_rank'],
+                single=raw_results[r]['single']['best'],
+                average=raw_results[r]['average']['best'],
+                single_rank=raw_results[r]['single']['world_rank'],
+                average_rank=raw_results[r]['average']['world_rank'],
                 person_id=user.id
             )
             results.append(result)

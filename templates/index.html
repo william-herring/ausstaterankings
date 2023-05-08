@@ -131,16 +131,12 @@
                     <th class="font-bold">#</th>
                     <th class="font-bold">Name</th>
                     <th class="font-bold">Result</th>
-                    <th class="font-bold">Competition</th>
-                    <th class="font-bold">Solves</th>
                 </tr>
-                {% for person in persons %}
+                {% for result in rankings %}
                     <tr class="font-normal">
-                        <th>{{person.id}}</th>
-                        <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{person.wca_id}}">{{person.name}}</a></th>
-                        <th>2.69</th>
-                        <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/competitions/SpeedcubingatSeaworks2023">Speedcubing at Seaworks 2023</a></th>
-                        <th class="space-x-6"><span></span>(1.94)<span></span>(4.09)<span></span>2.72<span></span>2.94<span></span>2.42</th>
+                        <th>{{result['rank']}}</th>
+                        <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
+                        <th>{{result['time'] * 0.01}}</th>
                     </tr>
                 {% endfor %}
             </table>

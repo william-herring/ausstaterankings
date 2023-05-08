@@ -22,3 +22,6 @@ class Result(db.Model):
     average = db.Column(db.Float)
     single_rank = db.Column(db.Integer)
     average_rank = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<Result {self.event} Person {self.person_id}>'

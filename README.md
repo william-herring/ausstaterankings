@@ -1,5 +1,6 @@
 # Australian State/Territory Speedcubing Rankings
-This is a site to keep track of Australian state and territory WCA rankings.
+This is a site to keep track of Australian state and territory WCA rankings. Contributors are greatly appreciated,
+please [contact me](mailto:william.herring.au@gmail.com) if you are familiar with Flask and/or the WCA API. 
 
 ## Setup
 1. Clone this repository

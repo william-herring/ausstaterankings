@@ -20,18 +20,41 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    results = Result.query.filter(Result.event == '333', Result.person.has(state='Victoria')).order_by(Result.single_rank.desc()).limit(100)
+    event = request.args.get('event')
+    state = request.args.get('state')
+    result_type = request.args.get('result_type')
+
+    if event is not None and state is not None and result_type is not None:
+        if result_type == 'average':
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
+        else:
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
+    else:
+        results = Result.query.filter(Result.event == '333', Result.person.has(state='Victoria')).order_by(Result.single_rank.desc()).limit(100)
+
     parsed_results = []
-    rank = 1
-    for r in results:
-        parsed_results.append({
-            'rank': rank,
-            'name': r.person.name,
-            'wca_id': r.person.wca_id,
-            'time': r.single
-        })
-        rank += 1
-    print(parsed_results)
+
+    if result_type == 'average':
+        rank = 1
+        for r in results:
+            parsed_results.append({
+                'rank': rank,
+                'name': r.person.name,
+                'wca_id': r.person.wca_id,
+                'time': r.average
+            })
+            rank += 1
+    else:
+        rank = 1
+        for r in results:
+            parsed_results.append({
+                'rank': rank,
+                'name': r.person.name,
+                'wca_id': r.person.wca_id,
+                'time': r.single
+            })
+            rank += 1
+
     return render_template('index.html', rankings=parsed_results)
 
 

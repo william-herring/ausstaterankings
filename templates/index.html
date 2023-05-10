@@ -45,84 +45,28 @@
                 Victoria
             </button>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-333"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-222"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-444"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-555"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-666"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-777"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-333bf"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-333fm"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-333oh"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-clock"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-minx"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-pyram"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-skewb"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-sq1"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-444bf"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-555bf"></span>
-                </button>
-                <button class="focus:text-black hover:text-neutral-400">
-                    <span class="cubing-icon event-333mbf"></span>
-                </button>
+                {% for event in ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
+                    <button class="{{ 'text-black' if request.args.get('event') == event else 'hover:text-neutral-400'}}" onclick="
+                    var params = new URLSearchParams(location.search);
+                    params.set('event', '{{event}}');
+                    window.location.search = params.toString();">
+                        <span class="cubing-icon event-{{ event }}"></span>
+                    </button>
+                {% endfor %}
             </div>
             <div class="flex space-x-3 mb-3">
                 <div class="flex">
-                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
+                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'average' else 'bg-blue-700' }} shadow-sm rounded-l-lg hover:bg-blue-700" onclick="
+                    var params = new URLSearchParams(location.search);
+                    params.set('result_type', 'single');
+                    window.location.search = params.toString();">
                         Single
                     </button>
-                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
+                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'single' else 'bg-blue-700' }} shadow-sm rounded-r-lg hover:bg-blue-700" onclick="
+                    var params = new URLSearchParams(location.search);
+                    params.set('result_type', 'average');
+                    window.location.search = params.toString();">
                         Average
-                    </button>
-                </div>
-                <div class="flex">
-                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
-                        All
-                    </button>
-                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm hover:bg-blue-700">
-                        Male
-                    </button>
-                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
-                        Female
-                    </button>
-                </div>
-                <div class="flex">
-                    <button class="p-2 text-sm text-white bg-blue-700 shadow-sm rounded-l-lg hover:bg-blue-600">
-                        People
-                    </button>
-                    <button class="p-2 text-sm text-white bg-blue-600 shadow-sm rounded-r-lg hover:bg-blue-700">
-                        Results
                     </button>
                 </div>
             </div>
@@ -136,7 +80,7 @@
                     <tr class="font-normal">
                         <th>{{result['rank']}}</th>
                         <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
-                        <th>{{result['time'] * 0.01}}</th>
+                        <th>{{(result['time'] * 0.01)|round(2)}}</th>
                     </tr>
                 {% endfor %}
             </table>

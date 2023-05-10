@@ -24,13 +24,13 @@ def index():
     state = request.args.get('state')
     result_type = request.args.get('result_type')
 
-    if event is not None and state is not None and result_type is not None:
+    if event is not None and result_type is not None:
         if result_type == 'average':
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.average_rank.desc()).limit(100)
         else:
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.single_rank.desc()).limit(100)
     else:
-        results = Result.query.filter(Result.event == '333', Result.person.has(state='Victoria')).order_by(Result.single_rank.desc()).limit(100)
+        results = Result.query.filter(Result.event == '333', Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.single_rank.desc()).limit(100)
 
     parsed_results = []
 

@@ -46,7 +46,7 @@
             </button>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
                 {% for event in ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
-                    <button class="{{ 'text-black' if request.args.get('event') == event else 'hover:text-neutral-400'}}" onclick="
+                    <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
                     var params = new URLSearchParams(location.search);
                     params.set('event', '{{event}}');
                     window.location.search = params.toString();">
@@ -62,7 +62,7 @@
                     window.location.search = params.toString();">
                         Single
                     </button>
-                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'single' else 'bg-blue-700' }} shadow-sm rounded-r-lg hover:bg-blue-700" onclick="
+                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'single' or request.args.get('result_type') == None else 'bg-blue-700' }} shadow-sm rounded-r-lg hover:bg-blue-700" onclick="
                     var params = new URLSearchParams(location.search);
                     params.set('result_type', 'average');
                     window.location.search = params.toString();">

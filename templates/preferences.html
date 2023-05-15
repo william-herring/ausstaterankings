@@ -40,13 +40,29 @@
     </nav>
     <div class="flex flex-col h-screen justify-center items-center">
         <div class="text-neutral-600 w-1/2">
-            <h1 class="text-2xl font-bold mb-3">Preferences</h1>
+            <h1 class="text-2xl font-bold mb-4">Preferences</h1>
             <p>
-                {% if country_iso2 == 'AU' %}
-                {{name}}
-                {{wca_id}}
+                {% if session['user']['country'] == 'AU' %}
+                <a href="https://www.worldcubeassociation.org/persons/{{session['user']['wca_id']}}" class="flex p-2 bg-neutral-200 rounded-lg hover:bg-neutral-300 items-center mb-2 w-full text-lg font-semibold">
+                    <img class="mr-2" width="40px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
+                    {{session['user']['name']}}
+                    ({{session['user']['wca_id']}})
+                </a>
+                <label class="font-semibold text-lg" for="state">Residing in:</label>
+                <select class="text-lg mb-4" id="state" name="state">
+                    <option value="" disabled selected hidden>Select state/territory</option>
+                    <option name="act">Australian Capital Territory</option>
+                    <option name="nsw">New South Wales</option>
+                    <option name="nt">Northern Territory</option>
+                    <option name="qld">Queensland</option>
+                    <option name="sa">South Australia</option>
+                    <option name="tas">Tasmania</option>
+                    <option name="vic">Victoria</option>
+                    <option name="wa">Western Australia</option>
+                </select>
+                <button class="flex items-center text-md p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update preferences</button>
                 {% else %}
-                No preferences
+                Only users with their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
                 {% endif %}
             </p>
         </div>

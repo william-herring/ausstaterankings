@@ -68,6 +68,10 @@ def preferences():
     return render_template('preferences.html')
 
 
+@app.route('/update-prefs', methods=['POST'])
+def update_preferences():
+    print(request.json)
+
 @app.route('/account-redirect')
 def account_redirect():
     code = request.args.get('code')

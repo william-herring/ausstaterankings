@@ -24,13 +24,16 @@ def index():
     state = request.args.get('state')
     result_type = request.args.get('result_type')
 
+    if state is None:
+        state = 'nsw'
+
     if event is not None and result_type is not None:
         if result_type == 'average':
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.average_rank.desc()).limit(100)
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
         else:
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.single_rank.desc()).limit(100)
+            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
     else:
-        results = Result.query.filter(Result.event == '333', Result.person.has(state=state if state is not None else 'Victoria')).order_by(Result.single_rank.desc()).limit(100)
+        results = Result.query.filter(Result.event == '333', Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
 
     parsed_results = []
 
@@ -55,7 +58,7 @@ def index():
             })
             rank += 1
 
-    return render_template('index.html', rankings=parsed_results)
+    return render_template('index.html', rankings=parsed_results, state=state)
 
 
 @app.route('/faq')

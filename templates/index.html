@@ -41,9 +41,19 @@
     <div class="flex flex-col h-screen justify-center items-center">
         <div class="w-2/3">
             <label class="text-neutral-600">State/Territory:</label>
-            <button class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200">
-                Victoria
-            </button>
+            <select class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200" id="state" name="state" onchange="
+            var params = new URLSearchParams(location.search);
+            params.set('state', this.value);
+            window.location.search = params.toString();">
+                <option selected="{{ 'selected' if state == 'nsw' else 'ignore' }}" value="nsw">New South Wales</option>
+                <option selected="{{ 'selected' if state == 'vic' else 'ignore' }}" value="vic">Victoria</option>
+                <option selected="{{ 'selected' if state == 'qld' else 'ignore' }}" value="qld">Queensland</option>
+                <option selected="{{ 'selected' if state == 'wa' else 'ignore' }}" value="wa">Western Australia</option>
+                <option selected="{{ 'selected' if state == 'sa' else 'ignore' }}" value="sa">South Australia</option>
+                <option selected="{{ 'selected' if state == 'tas' else 'ignore' }}" value="tas">Tasmania</option>
+                <option selected="{{ 'selected' if state == 'act' else 'ignore' }}" value="act">Australian Capital Territory</option>
+                <option selected="{{ 'selected' if state == 'nt' else 'ignore' }}" value="nt">Northern Territory</option>
+            </select>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
                 {% for event in ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
                     <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="

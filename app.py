@@ -26,14 +26,15 @@ def index():
 
     if state is None:
         state = 'nsw'
+    if event is None:
+        event = '333'
+    if result_type is None:
+        result_type = 'single'
 
-    if event is not None and result_type is not None:
-        if result_type == 'average':
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
-        else:
-            results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
+    if result_type == 'average':
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
     else:
-        results = Result.query.filter(Result.event == '333', Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
 
     parsed_results = []
 
@@ -68,7 +69,8 @@ def faq():
 
 @app.route('/preferences')
 def preferences():
-    return render_template('preferences.html')
+    state = Person.query.filter(Person.wca_id == session['user']['wca_id']).first().state
+    return render_template('preferences.html', state=state)
 
 
 @app.route('/update-prefs', methods=['POST'])

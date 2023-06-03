@@ -41,15 +41,15 @@
             <form id="prefsForm">
                 <label class="font-semibold text-lg" for="state">Residing in:</label>
                 <select class="text-lg mb-4 hover:cursor-pointer" id="state" name="state">
-                    <option value="" disabled selected hidden>Select state/territory</option>
-                    <option value="act">Australian Capital Territory</option>
-                    <option value="nsw">New South Wales</option>
-                    <option value="nt">Northern Territory</option>
-                    <option value="qld">Queensland</option>
-                    <option value="sa">South Australia</option>
-                    <option value="tas">Tasmania</option>
-                    <option value="vic">Victoria</option>
-                    <option value="wa">Western Australia</option>
+                    <option value="" disabled {% if state == None %}selected{% endif %} hidden>Select state/territory</option>
+                    <option {% if state == 'nsw' %}selected{% endif %} value="nsw">New South Wales</option>
+                    <option {% if state == 'vic' %}selected{% endif %} value="vic">Victoria</option>
+                    <option {% if state == 'qld' %}selected{% endif %} value="qld">Queensland</option>
+                    <option {% if state == 'wa' %}selected{% endif %} value="wa">Western Australia</option>
+                    <option {% if state == 'sa' %}selected{% endif %} value="sa">South Australia</option>
+                    <option {% if state == 'tas' %}selected{% endif %} value="tas">Tasmania</option>
+                    <option {% if state == 'act' %}selected{% endif %} value="act">Australian Capital Territory</option>
+                    <option {% if state == 'nt' %}selected{% endif %} value="nt">Northern Territory</option>
                 </select>
                 <button type="submit" class="flex items-center text-md p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:cursor-pointer">Update preferences</button>
             </form>

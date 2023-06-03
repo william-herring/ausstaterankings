@@ -73,8 +73,11 @@ def preferences():
 
 @app.route('/update-prefs', methods=['POST'])
 def update_preferences():
-    print(request.json)
-    return True
+    person = Person.query.filter(Person.wca_id == session['user']['wca_id']).first()
+    person.state = request.json['state']
+    db.session.commit()
+    return f"Preferences updated for user {person.wca_id}", 200
+
 
 @app.route('/account-redirect')
 def account_redirect():

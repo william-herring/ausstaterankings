@@ -42,17 +42,18 @@
                 <label class="font-semibold text-lg" for="state">Residing in:</label>
                 <select class="text-lg mb-4 hover:cursor-pointer" id="state" name="state">
                     <option value="" disabled selected hidden>Select state/territory</option>
-                    <option name="act">Australian Capital Territory</option>
-                    <option name="nsw">New South Wales</option>
-                    <option name="nt">Northern Territory</option>
-                    <option name="qld">Queensland</option>
-                    <option name="sa">South Australia</option>
-                    <option name="tas">Tasmania</option>
-                    <option name="vic">Victoria</option>
-                    <option name="wa">Western Australia</option>
+                    <option value="act">Australian Capital Territory</option>
+                    <option value="nsw">New South Wales</option>
+                    <option value="nt">Northern Territory</option>
+                    <option value="qld">Queensland</option>
+                    <option value="sa">South Australia</option>
+                    <option value="tas">Tasmania</option>
+                    <option value="vic">Victoria</option>
+                    <option value="wa">Western Australia</option>
                 </select>
                 <button type="submit" class="flex items-center text-md p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:cursor-pointer">Update preferences</button>
             </form>
+            <div id="messageBox"></div>
             {% else %}
             Only users with their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
             {% endif %}

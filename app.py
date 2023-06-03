@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 import os
 import requests
 from flask_sqlalchemy import SQLAlchemy
@@ -74,6 +74,7 @@ def preferences():
 @app.route('/update-prefs', methods=['POST'])
 def update_preferences():
     print(request.json)
+    return True
 
 @app.route('/account-redirect')
 def account_redirect():

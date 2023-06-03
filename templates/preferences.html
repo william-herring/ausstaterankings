@@ -8,16 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        tr:nth-child(even) {
-            background-color: #e5e5e5;
-        }
-        th {
-            font-weight: normal;
-            padding: 2px;
-            font-size: 14px;
-        }
-    </style>
+    <script src="{{ url_for('static', filename='src/js/prefs.js') }}"></script>
 </head>
 <body>
     <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
@@ -41,32 +32,30 @@
     <div class="flex flex-col h-screen justify-center items-center">
         <div class="text-neutral-600 w-1/2">
             <h1 class="text-2xl font-bold mb-4">Preferences</h1>
-            <p>
-                {% if session['user']['country'] == 'AU' %}
-                <a href="https://www.worldcubeassociation.org/persons/{{session['user']['wca_id']}}" class="flex p-2 bg-neutral-200 rounded-lg hover:bg-neutral-300 items-center mb-2 w-full text-lg font-semibold">
-                    <img class="mr-2" width="40px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
-                    {{session['user']['name']}}
-                    ({{session['user']['wca_id']}})
-                </a>
-                <form action="/update-prefs" method="POST">
-                    <label class="font-semibold text-lg" for="state">Residing in:</label>
-                    <select class="text-lg mb-4 hover:cursor-pointer" id="state" name="state">
-                        <option value="" disabled selected hidden>Select state/territory</option>
-                        <option name="act">Australian Capital Territory</option>
-                        <option name="nsw">New South Wales</option>
-                        <option name="nt">Northern Territory</option>
-                        <option name="qld">Queensland</option>
-                        <option name="sa">South Australia</option>
-                        <option name="tas">Tasmania</option>
-                        <option name="vic">Victoria</option>
-                        <option name="wa">Western Australia</option>
-                    </select>
-                    <input type="submit" class="flex items-center text-md p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:cursor-pointer" value="Update preferences">
-                </form>
-                {% else %}
-                Only users with their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
-                {% endif %}
-            </p>
+            {% if session['user']['country'] == 'AU' %}
+            <a href="https://www.worldcubeassociation.org/persons/{{session['user']['wca_id']}}" class="flex p-2 bg-neutral-200 rounded-lg hover:bg-neutral-300 items-center mb-2 w-full text-lg font-semibold">
+                <img class="mr-2" width="40px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
+                {{session['user']['name']}}
+                ({{session['user']['wca_id']}})
+            </a>
+            <form id="prefsForm">
+                <label class="font-semibold text-lg" for="state">Residing in:</label>
+                <select class="text-lg mb-4 hover:cursor-pointer" id="state" name="state">
+                    <option value="" disabled selected hidden>Select state/territory</option>
+                    <option name="act">Australian Capital Territory</option>
+                    <option name="nsw">New South Wales</option>
+                    <option name="nt">Northern Territory</option>
+                    <option name="qld">Queensland</option>
+                    <option name="sa">South Australia</option>
+                    <option name="tas">Tasmania</option>
+                    <option name="vic">Victoria</option>
+                    <option name="wa">Western Australia</option>
+                </select>
+                <button type="submit" class="flex items-center text-md p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:cursor-pointer">Update preferences</button>
+            </form>
+            {% else %}
+            Only users with their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
+            {% endif %}
         </div>
     </div>
     <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">

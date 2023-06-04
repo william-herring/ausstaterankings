@@ -55,14 +55,14 @@
                 <option {% if state == 'nt' %}selected{% endif %} value="nt">Northern Territory</option>
             </select>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
-                {% for event in ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
-                    <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
-                    var params = new URLSearchParams(location.search);
-                    params.set('event', '{{event}}');
-                    window.location.search = params.toString();">
-                        <span class="cubing-icon event-{{ event }}"></span>
-                    </button>
-                {% endfor %}
+            {% for event in ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
+                <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
+                var params = new URLSearchParams(location.search);
+                params.set('event', '{{event}}');
+                window.location.search = params.toString();">
+                    <span class="cubing-icon event-{{ event }}"></span>
+                </button>
+            {% endfor %}
             </div>
             <div class="flex space-x-3 mb-3">
                 <div class="flex">
@@ -90,7 +90,7 @@
                     <tr class="font-normal">
                         <th>{{result['rank']}}</th>
                         <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
-                        <th>{{(result['time'] * 0.01)|round(2)}}</th>
+                        <th>{{ (result['time'] * 0.01)|round(2) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ (result['time'] * 0.01 / 60 % 1 * 60)|round(2) }}</th>
                     </tr>
                 {% endfor %}
             </table>

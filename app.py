@@ -1,6 +1,5 @@
-import json
-
-from flask import Flask, render_template, request, session, jsonify
+import schedule
+from flask import Flask, render_template, request, session
 import os
 import requests
 from flask_sqlalchemy import SQLAlchemy
@@ -12,11 +11,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from models import Person, Result
+from update_results import update_results
 
 with app.app_context():
     db.create_all()
     db.session.commit()
 
+# Schedule results updates
+schedule.every().wednesday.do(update_results)
 
 @app.route('/')
 def index():
@@ -69,7 +71,9 @@ def faq():
 
 @app.route('/preferences')
 def preferences():
-    state = Person.query.filter(Person.wca_id == session['user']['wca_id']).first().state
+    state = None
+    if session['user']['wca_id'] is not None:
+        state = Person.query.filter(Person.wca_id == session['user']['wca_id']).first().state
     return render_template('preferences.html', state=state)
 
 
@@ -84,7 +88,6 @@ def update_preferences():
 @app.route('/account-redirect')
 def account_redirect():
     code = request.args.get('code')
-    print(request.args.get('redirectUrl'))
     token = requests.post('https://www.worldcubeassociation.org/oauth/token', data={
         'grant_type': 'authorization_code',
         'code': code,
@@ -109,9 +112,7 @@ def account_redirect():
         raw_results = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{user_data["wca_id"]}').json()[
             'personal_records']
         results = []
-        print(raw_results.keys(), len(raw_results.keys()))
         for r in raw_results.keys():
-            print(raw_results[r]['single']['best'])
             result = Result(
                 event=r,
                 single=raw_results[r]['single']['best'],

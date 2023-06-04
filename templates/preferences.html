@@ -32,12 +32,13 @@
     <div class="flex flex-col h-screen justify-center items-center">
         <div class="text-neutral-600 w-1/2">
             <h1 class="text-2xl font-bold mb-4">Preferences</h1>
-            {% if session['user']['country'] == 'AU' %}
-            <a href="https://www.worldcubeassociation.org/persons/{{session['user']['wca_id']}}" class="flex p-2 bg-neutral-200 rounded-lg hover:bg-neutral-300 items-center mb-2 w-full text-lg font-semibold">
+            {% if session['user']['country'] == 'AU' and session['user']['wca_id'] %}
+            <a href="https://www.worldcubeassociation.org/persons/{{session['user']['wca_id']}}" class="flex p-2 bg-neutral-200 mb-4 rounded-lg hover:bg-neutral-300 items-center w-full text-lg font-semibold">
                 <img class="mr-2" width="40px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
                 {{session['user']['name']}}
                 ({{session['user']['wca_id']}})
             </a>
+
             <form id="prefsForm">
                 <label class="font-semibold text-lg" for="state">Residing in:</label>
                 <select class="text-lg mb-4 hover:cursor-pointer" id="state" name="state">
@@ -55,7 +56,7 @@
             </form>
             <div id="messageBox"></div>
             {% else %}
-            Only users with their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
+            Only users with a WCA ID and their nationality listed as Australian can edit their preferences. If you reside in Australia but represent another country, you can <a class="text-blue-700" href="mailto:william.herring.au@gmail.com">email me</a> to be added to the database.
             {% endif %}
         </div>
     </div>

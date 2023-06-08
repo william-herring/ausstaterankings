@@ -93,7 +93,7 @@ def account_redirect():
         'code': code,
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET'),
-        'redirect_uri': 'http://localhost:5000/account-redirect?redirectUrl=' + request.args.get('redirectUrl')
+        'redirect_uri': request.base_url + '?redirectUrl=' + request.args.get('redirectUrl')
     }).json()['access_token']
     session['token'] = token
     user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',

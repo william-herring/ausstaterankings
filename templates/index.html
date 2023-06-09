@@ -86,7 +86,7 @@
                     <th class="font-bold">Name</th>
                     <th class="font-bold">Result</th>
                 </tr>
-                {% if request.args.get('event') == '333fm' %}
+                {% if request.args.get('event') == '333fm' and request.args.get('result_type') != 'average' %}
                     {% for result in rankings %}
                         <tr class="font-normal">
                             <th>{{result['rank']}}</th>

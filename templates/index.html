@@ -86,14 +86,23 @@
                     <th class="font-bold">Name</th>
                     <th class="font-bold">Result</th>
                 </tr>
-                {% for result in rankings %}
-                    <tr class="font-normal">
-                        <th>{{result['rank']}}</th>
-                        <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
-
-                        <th>{{ (result['time'] * 0.01)|round(2) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ (result['time'] * 0.01 / 60 % 1 * 60)|round(2) }}</th>
-                    </tr>
-                {% endfor %}
+                {% if request.args.get('event') == '333fm' %}
+                    {% for result in rankings %}
+                        <tr class="font-normal">
+                            <th>{{result['rank']}}</th>
+                            <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th>{{ result['time']|int }}</th>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for result in rankings %}
+                        <tr class="font-normal">
+                            <th>{{result['rank']}}</th>
+                            <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th>{{ "%.2f"|format(result['time'] * 0.01) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ "%.2f"|format((result['time'] * 0.01 / 60 % 1 * 60)) }}</th>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </table>
         </div>
     </div>

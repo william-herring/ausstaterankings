@@ -55,7 +55,7 @@
                 <option {% if state == 'nt' %}selected{% endif %} value="nt">Northern Territory</option>
             </select>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
-            {% for event in ['333', '222', '444', '555', '666', '777', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
+            {% for event in ['333', '222', '444', '555', '666', '777', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '333bf', '444bf', '555bf'] %}
                 <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
                 var params = new URLSearchParams(location.search);
                 params.set('event', '{{event}}');

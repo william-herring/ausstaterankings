@@ -34,9 +34,9 @@ def index():
         result_type = 'single'
 
     if result_type == 'average':
-        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.average is not None).order_by(Result.average_rank.asc()).limit(100)
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.average.isnot(None)).order_by(Result.average_rank.asc()).limit(100)
     else:
-        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.single is not None).order_by(Result.single_rank.asc()).limit(100)
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.single.isnot(None)).order_by(Result.single_rank.asc()).limit(100)
 
     parsed_results = []
 

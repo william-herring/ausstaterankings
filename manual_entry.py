@@ -6,10 +6,12 @@ import requests
 from models import Person, Result
 from app import db
 
-while True:
-    wca_id = input('Enter ID: ')
-    state = input('Enter state or territory: ')
+def add_user(wca_id, state):
+    if db.session.query(Person).filter(Person.wca_id == wca_id).first() is not None:
+        return 'Bad Request: User already exists', 400
+
     user_data = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{wca_id}').json()
+
     person = Person(
         name=user_data['person']['name'],
         wca_id=wca_id,
@@ -65,3 +67,9 @@ while True:
     person.results = results
     db.session.add(person)
     db.session.commit()
+
+    return f'User {wca_id} added'
+
+if __name__ == '__main__':
+    while True:
+        add_user(input('WCA ID: '), input('State or territory: '))

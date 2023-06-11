@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from models import Person, Result
+from manual_entry import add_user
 from update_results import update_results
 
 with app.app_context():
@@ -158,3 +159,17 @@ def account_redirect():
 
     session['user'] = {'name': user_data['name'], 'avatar': user_data['avatar']['thumb_url'], 'wca_id': user_data['wca_id'], 'country': user_data['country']['iso2']}
     return render_template('account-redirect.html')
+
+@app.route('/manual-entry')
+def manual_entry():
+    if session['user']['wca_id'] == '2019HERR14':
+        wca_id = request.args.get('wca_id')
+        state = request.args.get('state')
+
+        if wca_id is not None and state is not None:
+            req = add_user(wca_id, state)
+            if req != 200:
+                return req
+
+        return render_template('manual-entry-interface.html')
+    return 'Access not permitted', 403

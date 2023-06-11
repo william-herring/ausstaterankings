@@ -22,10 +22,12 @@ def add_user(wca_id, state):
     db.session.add(person)
     db.session.commit()
 
+    print(user_data)
+
     raw_results = user_data['personal_records']
     results = []
     for r in raw_results.keys():
-        if r == '333mbf':
+        if r in ['333mbf', '333ft', 'magic', 'mmagic']:
             continue
 
         try:

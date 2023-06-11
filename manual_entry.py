@@ -68,7 +68,7 @@ def add_user(wca_id, state):
     db.session.add(person)
     db.session.commit()
 
-    return f'User {wca_id} added'
+    return 200
 
 if __name__ == '__main__':
     while True:

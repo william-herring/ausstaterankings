@@ -162,7 +162,7 @@ def account_redirect():
 
 @app.route('/manual-entry')
 def manual_entry():
-    if session['user']['wca_id'] in ['2019HERR14', '2018NGHA02', '2019LUCA01']:
+    if session['user']['wca_id'] in ['2019HERR14', '2018NGHA02', '2019LUCA01', '2016CULF01']:
         wca_id = request.args.get('wca_id')
         state = request.args.get('state')
 

@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <nav class="w-screen bg-white fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
+    <nav class="w-screen bg-white flex sticky top-0 items-center p-6 py-4 text-neutral-600 shadow-md">
         <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State/Territory Speedcubing Rankings</a>
         <a href="/" class="mr-6 hover:underline">Rankings</a>
         <a href="/faq" class="hover:underline">FAQ</a>
@@ -41,8 +41,8 @@
             {% endif %}
         </div>
     </nav>
-    <div class="flex flex-col h-screen justify-center items-center">
-        <div class="w-2/3" style="margin-top: 46vh;">
+    <div class="flex flex-col mt-16 justify-center items-center">
+        <div class="w-2/3">
             <label class="text-neutral-600">State/Territory:</label>
             <select class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200" id="state" name="state" onchange="
             var params = new URLSearchParams(location.search);
@@ -108,11 +108,10 @@
                 {% endif %}
             </table>
         </div>
-        <div class="p-6 text-neutral-600 flex space-x-4 justify-end bottom-0 w-screen bg-red">
-            <p>© William Herring 2023</p>
-            <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
-        </div>
     </div>
-
+    <div class="p-6 text-neutral-600 flex space-x-4 justify-end w-screen bg-red">
+        <p>© William Herring 2023</p>
+        <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
+    </div>
 </body>
 </html>

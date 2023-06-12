@@ -11,6 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from models import Person, Result
+from manual_entry import add_user
 from update_results import update_results
 
 with app.app_context():
@@ -34,9 +35,9 @@ def index():
         result_type = 'single'
 
     if result_type == 'average':
-        results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.average_rank.desc()).limit(100)
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.average.isnot(None)).order_by(Result.average_rank.asc()).limit(100)
     else:
-        results = Result.query.filter(Result.event == event, Result.person.has(state=state)).order_by(Result.single_rank.desc()).limit(100)
+        results = Result.query.filter(Result.event == event, Result.person.has(state=state), Result.single.isnot(None)).order_by(Result.single_rank.asc()).limit(100)
 
     parsed_results = []
 
@@ -93,7 +94,7 @@ def account_redirect():
         'code': code,
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET'),
-        'redirect_uri': 'http://localhost:5000/account-redirect?redirectUrl=' + request.args.get('redirectUrl')
+        'redirect_uri': request.base_url + '?redirectUrl=' + request.args.get('redirectUrl')
     }).json()['access_token']
     session['token'] = token
     user_data = requests.get('https://www.worldcubeassociation.org/api/v0/me',
@@ -158,3 +159,17 @@ def account_redirect():
 
     session['user'] = {'name': user_data['name'], 'avatar': user_data['avatar']['thumb_url'], 'wca_id': user_data['wca_id'], 'country': user_data['country']['iso2']}
     return render_template('account-redirect.html')
+
+@app.route('/manual-entry')
+def manual_entry():
+    if session['user']['wca_id'] in ['2019HERR14', '2018NGHA02', '2019LUCA01', '2016CULF01', '2022FETH01', '2021OTSU01', '2022CUIA01']:
+        wca_id = request.args.get('wca_id')
+        state = request.args.get('state')
+
+        if wca_id is not None and state is not None:
+            req = add_user(wca_id, state)
+            if req != 200:
+                return req
+
+        return render_template('manual-entry-interface.html')
+    return 'Access not permitted', 403

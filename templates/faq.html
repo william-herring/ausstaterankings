@@ -31,7 +31,7 @@
                 <p>{{session['user']['name']}}</p>
             </a>
             {% else %}
-            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=tghESRbf5HsdGkBPu_gf1BQIIcFbDHz-edk_fvL-lLo&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Faccount-redirect%3FredirectUrl%3D%2Ffaq&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https://ausstaterankings.onrender.com/account-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
                 <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
                 <p>Log in</p>
             </a>
@@ -42,7 +42,7 @@
         <div class="text-neutral-600 w-2/3">
             <h1 class="text-2xl font-bold mb-3">FAQ</h1>
             <h2 class="text-lg font-semibold">Why can't I see my results?</h2>
-            <p>The WCA doesn't record your state/territory of residence, so you must log in to this site if you wish to see
+            <p>The WCA doesn't record your state/territory of residence, so you must log in to this site and set your state on preferences if you wish to see
             your state ranking. Some results are added by admins, but if you don't see yourself and expected to, please <a class="underline" href="/login">log in</a>.</p>
             <br>
             <h2 class="text-lg font-semibold">How do I change my state/territory?</h2>
@@ -58,7 +58,7 @@
             results are uploaded to the WCA database. If not, don't stress; they will update soon.</p>
             <br>
             <h2 class="text-lg font-semibold">How can I help?</h2>
-            <p>This site is completely open-source. If you have any suggestions or improvements and are familiar with Flask, check out the <a class="underline" href="https://github.com/william-herring/ausstaterankings">GitHub repository</a>.</p>
+            <p>This site is completely open-source. If you have any suggestions or improvements and are familiar with Flask and/or the WCA API, check out the <a class="underline" href="https://github.com/william-herring/ausstaterankings">GitHub repository</a>.</p>
         </div>
     </div>
     <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">

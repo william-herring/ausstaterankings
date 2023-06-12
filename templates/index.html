@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        body {
+            overflow-x: hidden;
+        }
         tr:nth-child(even) {
             background-color: #e5e5e5;
         }
@@ -20,7 +23,7 @@
     </style>
 </head>
 <body>
-    <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
+    <nav class="w-screen bg-white flex sticky top-0 items-center p-6 py-4 text-neutral-600 shadow-md">
         <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State/Territory Speedcubing Rankings</a>
         <a href="/" class="mr-6 hover:underline">Rankings</a>
         <a href="/faq" class="hover:underline">FAQ</a>
@@ -31,14 +34,14 @@
                 <p>{{session['user']['name']}}</p>
             </a>
             {% else %}
-            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=tghESRbf5HsdGkBPu_gf1BQIIcFbDHz-edk_fvL-lLo&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Faccount-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https://ausstaterankings.onrender.com/account-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
                 <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo_notext.svg">
                 <p>Log in</p>
             </a>
             {% endif %}
         </div>
     </nav>
-    <div class="flex flex-col h-screen justify-center items-center">
+    <div class="flex flex-col mt-16 justify-center items-center">
         <div class="w-2/3">
             <label class="text-neutral-600">State/Territory:</label>
             <select class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200" id="state" name="state" onchange="
@@ -55,7 +58,7 @@
                 <option {% if state == 'nt' %}selected{% endif %} value="nt">Northern Territory</option>
             </select>
             <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
-            {% for event in ['333', '222', '444', '555', '666', '777', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf', '333mbf'] %}
+            {% for event in ['333', '222', '444', '555', '666', '777', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '333bf', '444bf', '555bf'] %}
                 <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
                 var params = new URLSearchParams(location.search);
                 params.set('event', '{{event}}');
@@ -86,18 +89,27 @@
                     <th class="font-bold">Name</th>
                     <th class="font-bold">Result</th>
                 </tr>
-                {% for result in rankings %}
-                    <tr class="font-normal">
-                        <th>{{result['rank']}}</th>
-                        <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
-
-                        <th>{{ (result['time'] * 0.01)|round(2) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ (result['time'] * 0.01 / 60 % 1 * 60)|round(2) }}</th>
-                    </tr>
-                {% endfor %}
+                {% if request.args.get('event') == '333fm' and request.args.get('result_type') != 'average' %}
+                    {% for result in rankings %}
+                        <tr class="font-normal">
+                            <th>{{result['rank']}}</th>
+                            <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th>{{ result['time']|int }}</th>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for result in rankings %}
+                        <tr class="font-normal">
+                            <th>{{result['rank']}}</th>
+                            <th class="text-orange-700"><a href="https://www.worldcubeassociation.org/persons/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th>{{ "%.2f"|format(result['time'] * 0.01) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ "%.2f"|format((result['time'] * 0.01 / 60 % 1 * 60)) }}</th>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </table>
         </div>
     </div>
-    <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">
+    <div class="p-6 text-neutral-600 flex space-x-4 justify-end w-screen bg-red">
         <p>© William Herring 2023</p>
         <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
     </div>

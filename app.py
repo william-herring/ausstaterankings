@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session
 import os
 import requests
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -8,6 +9,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 from models import Person, Result
 from manual_entry import add_user
@@ -23,7 +25,6 @@ admins = ['2019HERR14', '2018NGHA02', '2019LUCA01', '2016CULF01', '2022FETH01', 
 
 @app.route('/')
 def index():
-    update_results()
     event = request.args.get('event')
     state = request.args.get('state')
     result_type = request.args.get('result_type')

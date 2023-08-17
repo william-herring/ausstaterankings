@@ -8,6 +8,7 @@ class Person(db.Model):
     avatar = db.Column(db.String(300), nullable=False)
     country = db.Column(db.String(2), nullable=False)
     state = db.Column(db.String(30), nullable=True)
+    last_competition = db.Column(db.String(200), nullable=True)
     results = db.relationship('Result', backref='person', lazy=True)
 
     def __repr__(self):

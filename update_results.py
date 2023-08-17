@@ -3,16 +3,26 @@ This is a scheduled function to be executed every Wednesday.
 The purpose of this utility is to keep the results of every user up to date.
 It can also be used to manually update results.
 """
+import random
+import time
 import requests
 from models import Person, Result
 from app import db
 
 
 def update_results():
+    print("Updating results")
     people = Person.query.all()
     Result.query.delete()
 
+    people_updated = []
+
     for person in people:
+        time.sleep(random.uniform(0.02, 0.08))
+        last_competition = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{person.wca_id}/competitions').json()[-1]
+        if last_competition['id'] == person.last_competition:
+            continue
+
         raw_results = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{person.wca_id}').json()[
             'personal_records']
         results = []
@@ -56,6 +66,10 @@ def update_results():
 
             results.append(result)
 
+        person.last_competition = last_competition['id']
         person.results = results
         db.session.add(person)
         db.session.commit()
+        people_updated.append(person.wca_id)
+
+    return people_updated

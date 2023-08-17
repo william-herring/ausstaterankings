@@ -1,4 +1,3 @@
-import schedule
 from flask import Flask, render_template, request, session
 import os
 import requests
@@ -14,15 +13,17 @@ from models import Person, Result
 from manual_entry import add_user
 from update_results import update_results
 
+
 with app.app_context():
     db.create_all()
     db.session.commit()
 
-# Schedule results updates
-schedule.every().wednesday.do(update_results)
+admins = ['2019HERR14', '2018NGHA02', '2019LUCA01', '2016CULF01', '2022FETH01', '2021OTSU01', '2022CUIA01']
+
 
 @app.route('/')
 def index():
+    update_results()
     event = request.args.get('event')
     state = request.args.get('state')
     result_type = request.args.get('result_type')
@@ -101,11 +102,13 @@ def account_redirect():
                              headers={'Authorization': f'Bearer {token}'}).json()['me']
 
     if db.session.query(Person).filter(Person.wca_id == user_data['wca_id']).first() is None and user_data['wca_id'] is not None:
+        last_competition = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{user_data["wca_id"]}/competitions').json()[-1]
         user = Person(
             name=user_data['name'],
             wca_id=user_data['wca_id'],
             avatar=user_data['avatar']['thumb_url'],
             country=user_data['country']['iso2'],
+            last_competition=user_data['id']
         )
         db.session.add(user)
         db.session.commit()
@@ -162,7 +165,7 @@ def account_redirect():
 
 @app.route('/manual-entry')
 def manual_entry():
-    if session['user']['wca_id'] in ['2019HERR14', '2018NGHA02', '2019LUCA01', '2016CULF01', '2022FETH01', '2021OTSU01', '2022CUIA01']:
+    if session['user']['wca_id'] in admins:
         wca_id = request.args.get('wca_id')
         state = request.args.get('state')
 
@@ -172,4 +175,12 @@ def manual_entry():
                 return req
 
         return render_template('manual-entry-interface.html')
-    return 'Access not permitted', 403
+    return 'Access forbidden', 403
+
+@app.route('/update-results')
+def update_results_process():
+    if session['user']['wca_id'] in admins:
+        people_updated = update_results()
+
+        return render_template('manual-entry-interface.html', people=people_updated)
+    return 'Access forbidden', 403

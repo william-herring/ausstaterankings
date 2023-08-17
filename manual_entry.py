@@ -11,6 +11,7 @@ def add_user(wca_id, state):
         return 'Bad Request: User already exists', 400
 
     user_data = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{wca_id}').json()
+    last_competition = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{wca_id}/competitions').json()[-1]
 
     person = Person(
         name=user_data['person']['name'],
@@ -66,6 +67,7 @@ def add_user(wca_id, state):
 
         results.append(result)
 
+    person.last_competition = last_competition['id']
     person.results = results
     db.session.add(person)
     db.session.commit()

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, copy_current_request_context
 import os
 import requests
 from threading import Thread
@@ -72,6 +72,11 @@ def index():
 def faq():
     return render_template('faq.html')
 
+@app.route('/person/<wca_id>')
+def profile(wca_id):
+    person = Person.query.filter(Person.wca_id == wca_id).first()
+    is_admin = person.wca_id in admins
+    return render_template('profile.html', person=person, is_admin=is_admin)
 
 @app.route('/preferences')
 def preferences():
@@ -110,7 +115,7 @@ def account_redirect():
             wca_id=user_data['wca_id'],
             avatar=user_data['avatar']['thumb_url'],
             country=user_data['country']['iso2'],
-            last_competition=user_data['id']
+            last_competition=last_competition['id']
         )
         db.session.add(user)
         db.session.commit()
@@ -189,8 +194,12 @@ def update_results_manual():
 
 @app.route('/update-results')
 def update_results_api():
+    @copy_current_request_context
+    def process():
+        update_results()
+
     if request.args.get('key') == os.getenv('SCHEDULER_KEY'):
-        Thread(target=update_results).start()
+        Thread(target=process).start()
 
         return 'Started update', 200
     return 'Access forbidden', 403

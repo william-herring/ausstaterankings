@@ -11,17 +11,21 @@ from app import db
 
 
 def update_results():
-    print("Updating results")
     people = Person.query.all()
-    Result.query.delete()
-
     people_updated = []
+
+    print(f"{len(people)} results to update")
 
     for person in people:
         time.sleep(random.uniform(0.02, 0.08))
         last_competition = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{person.wca_id}/competitions').json()[-1]
-        if last_competition['id'] == person.last_competition:
+        if last_competition['id'] == person.last_competition and len(person.results) > 0:
             continue
+
+        for i in person.results:
+            i.delete()
+
+        db.session.commit()
 
         raw_results = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{person.wca_id}').json()[
             'personal_records']
@@ -74,4 +78,5 @@ def update_results():
 
         print('Updated results for ' + person.wca_id)
 
+    print(f"Updated results for {len(people)} people")
     return people_updated

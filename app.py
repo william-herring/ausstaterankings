@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, jsonify
 import os
 import requests
+from threading import Thread
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -189,7 +190,7 @@ def update_results_manual():
 @app.route('/update-results')
 def update_results_api():
     if request.args.get('key') == os.getenv('SCHEDULER_KEY'):
-        people_updated = update_results()
+        Thread(target=update_results).start()
 
-        return jsonify({'Updated results': people_updated}), 200
+        return 'Started update', 200
     return 'Access forbidden', 403

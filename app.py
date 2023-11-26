@@ -179,7 +179,7 @@ def manual_entry():
     return 'Access forbidden', 403
 
 @app.route('/update-results-manual')
-def update_results_process():
+def update_results_manual():
     if session['user']['wca_id'] in admins:
         people_updated = update_results()
 
@@ -187,7 +187,7 @@ def update_results_process():
     return 'Access forbidden', 403
 
 @app.route('/update-results')
-def update_results_process():
+def update_results_api():
     if request.args.get('key') == os.getenv('SCHEDULER_KEY'):
         people_updated = update_results()
 

@@ -72,6 +72,11 @@ def index():
 def faq():
     return render_template('faq.html')
 
+@app.route('/person/<wca_id>')
+def profile(wca_id):
+    person = Person.query.filter(Person.wca_id == wca_id).first()
+    is_admin = person.wca_id in admins
+    return render_template('profile.html', person=person, is_admin=is_admin)
 
 @app.route('/preferences')
 def preferences():

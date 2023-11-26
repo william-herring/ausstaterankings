@@ -72,4 +72,6 @@ def update_results():
         db.session.commit()
         people_updated.append(person.wca_id)
 
+        print('Updated results for ' + person.id)
+
     return people_updated

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 import os
 import requests
 from flask_migrate import Migrate
@@ -178,10 +178,18 @@ def manual_entry():
         return render_template('manual-entry-interface.html')
     return 'Access forbidden', 403
 
-@app.route('/update-results')
+@app.route('/update-results-manual')
 def update_results_process():
     if session['user']['wca_id'] in admins:
         people_updated = update_results()
 
         return render_template('manual-entry-interface.html', people=people_updated)
+    return 'Access forbidden', 403
+
+@app.route('/update-results')
+def update_results_process():
+    if request.args.get('key') == os.getenv('SCHEDULER_KEY'):
+        people_updated = update_results()
+
+        return jsonify({'Updated results': people_updated}), 200
     return 'Access forbidden', 403

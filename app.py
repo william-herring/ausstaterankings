@@ -76,7 +76,17 @@ def faq():
 def profile(wca_id):
     person = Person.query.filter(Person.wca_id == wca_id).first()
     is_admin = person.wca_id in admins
-    return render_template('profile.html', person=person, is_admin=is_admin)
+    rankings = {}
+    for r in person.results:
+        if r.average is not None:
+            average_rank = Result.query.filter(Result.event == r.event, Result.person.has(state=person.state), Result.average.isnot(None)).order_by(Result.average_rank.asc()).all().index(r)
+        else:
+            average_rank = 0
+        single_rank = Result.query.filter(Result.event == r.event, Result.person.has(state=person.state), Result.single.isnot(None)).order_by(Result.single_rank.asc()).all().index(r)
+
+        rankings[r.event] = (single_rank + 1, average_rank + 1)
+
+    return render_template('profile.html', person=person, is_admin=is_admin, rankings=rankings)
 
 @app.route('/preferences')
 def preferences():

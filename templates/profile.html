@@ -79,7 +79,7 @@
             {% for result in person.results %}
                 <tr class="font-normal">
                     <th><span class="cubing-icon event-{{ result.event }}"></span></th>
-                    <th>{{result.single_rank}}</th>
+                    <th>{{rankings[result.event][0]}}</th>
                     {% if result.event == "333fm" %}
                     <th>{{ result.single|int }}</th>
                     {% else %}
@@ -87,7 +87,7 @@
                     {% endif %}
                     {% if result.average %}
                     <th>{{ "%.2f"|format(result.average * 0.01) if result.average * 0.01 < 60 else (result.average * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ "%.2f"|format((result.average * 0.01 / 60 % 1 * 60)) }}</th>
-                    <th>{{result.average_rank}}</th>
+                    <th>{{rankings[result.event][1]}}</th>
                     {% else %}
                     <th></th>
                     <th></th>

@@ -42,7 +42,7 @@
             {% endif %}
         </div>
     </nav>
-    <div class="flex flex-col h-screen justify-center items-center text-neutral-600">
+    <div class="flex flex-col h-screen mt-40 justify-center items-center text-neutral-600">
         <div class="flex items-center justify-center">
             <h1 class="font-semibold text-4xl mr-3">{{person.name}}</h1>
             <a href="https://www.worldcubeassociation.org/persons/{{person.wca_id}}">
@@ -96,7 +96,7 @@
             {% endfor %}
         </table>
     </div>
-    <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen">
+    <div class="p-6 text-neutral-600 flex space-x-4 justify-end relative bottom-0 w-screen">
         <p>© William Herring 2023</p>
         <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
     </div>

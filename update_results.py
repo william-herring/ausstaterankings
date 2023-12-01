@@ -23,7 +23,7 @@ def update_results():
             continue
 
         for i in person.results:
-            i.delete()
+            db.session.delete(i)
 
         db.session.commit()
 

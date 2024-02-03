@@ -10,6 +10,31 @@ from models import Person, Result
 from app import db
 
 
+def generate_kinch():
+    events = ['333', '222', '444', '555', '666', '777', '333bf', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444bf', '555bf']
+
+    for event in events:
+        state_results = {
+            'nsw': 0,
+            'vic': 0,
+            'sa': 0,
+            'qld': 0,
+            'wa': 0,
+            'nt': 0,
+            'tas': 0,
+            'act': 0
+        }
+        for state in state_results.keys():
+            person = Person.query.join(Person.results).filter(Result.event == event, Person.state == state).order_by(Result.average_rank.asc()).limit(1).first()
+            if person is not None:
+                top_result = [r for r in person.results if r.event == event][0].average
+                state_results[state] = top_result
+            else:
+                state_results[state] = 0
+
+        nr = list(state_results.values()).remove(0).sort()
+        print(nr)
+
 def update_results():
     people = Person.query.all()
     people_updated = []

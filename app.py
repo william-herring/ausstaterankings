@@ -180,6 +180,10 @@ def account_redirect():
     session['user'] = {'name': user_data['name'], 'avatar': user_data['avatar']['thumb_url'], 'wca_id': user_data['wca_id'], 'country': user_data['country']['iso2']}
     return render_template('account-redirect.html')
 
+@app.route('/kinch')
+def kinch():
+    return render_template('kinch.html')
+
 @app.route('/manual-entry')
 def manual_entry():
     if session['user']['wca_id'] in admins:

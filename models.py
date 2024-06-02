@@ -26,3 +26,24 @@ class Result(db.Model):
 
     def __repr__(self):
         return f'<Result {self.event} Person {self.person_id}>'
+
+
+class KinchRank(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    state = db.Column(db.String(30), nullable=False)
+    k_333 = db.Column(db.Float)
+    k_222 = db.Column(db.Float)
+    k_444 = db.Column(db.Float)
+    k_555 = db.Column(db.Float)
+    k_666 = db.Column(db.Float)
+    k_777 = db.Column(db.Float)
+    k_333bf = db.Column(db.Float)
+    k_333fm = db.Column(db.Float)
+    k_333oh = db.Column(db.Float)
+    k_clock = db.Column(db.Float)
+    k_minx = db.Column(db.Float)
+    k_pyram = db.Column(db.Float)
+    k_skewb = db.Column(db.Float)
+    k_sq1 = db.Column(db.Float)
+    k_444bf = db.Column(db.Float)
+    k_555bf = db.Column(db.Float)

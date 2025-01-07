@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/cubing-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/css/build.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        tr:nth-child(even) {
+            background-color: #e5e5e5;
+        }
+        th {
+            font-weight: normal;
+            padding: 2px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <nav class="w-screen z-50 bg-slate-900 flex sticky top-0 items-center justify-center px-10 py-4 text-neutral-200">
+        <a href="/" class="mr-6 hover:underline">Rankings</a>
+        <a href="/faq" class="mr-6 hover:underline">FAQ</a>
+        <a href="/about" class="hover:underline">About</a>
+        <div class="ml-auto">
+            {% if session['user'] %}
+            <a href="/preferences" class="flex items-center space-x-3 hover:underline">
+                <img class="object-cover h-8 w-8 rounded-full" src="{{session['user']['avatar']}}">
+                <p>{{session['user']['name']}}</p>
+            </a>
+            {% else %}
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https%3A%2F%2Fausstaterankings.onrender.com%2Faccount-redirect%3FredirectUrl%3D%2Fabout&response_type=code&scope=" class="flex items-center font-semibold text-sm p-3 bg-emerald-600 rounded-lg hover:bg-emerald-700">
+                <img class="mr-3" height="20px" width="20px" src="https://assets.worldcubeassociation.org/assets/1dc28f5/packs/static/components/StaticPages/LogoImages/WCA%20Logo%20Only%20Positive%20Primary-de8bfbd9d4fde40ccc22.svg">
+                <p>Log in</p>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="flex flex-col justify-center items-center mt-24">
+        <div class="w-2/3">
+            <h1 class="text-2xl font-bold mb-3">About</h1>
+            This is a site to keep track of state and territory speedcubing rankings in Australia. Authored by William Herring.<br><br>
+            The project is open-source (<a class="underline" href="https://github.com/william-herring/ausstaterankings">see repo</a>) and feedback/contributions are appreciated greatly. <br><br>
+            <h2 class="text-lg font-semibold">How it works</h2>
+            Users sign in using their WCA account. If they have a WCA ID, their results as stored in the WCA database are copied to a local database, along with their basic details (name, avatar).
+            After signing in, the user is able to select their state or territory of residence in their preferences (click profile picture in the top right to navigate). Some people have been added manually by
+            site administrators to populate the rankings. People who represent a country other than Australia but reside here are added manually by site administrators (more on this in <a class="underline" href="/faq">FAQ</a>).
+
+        </div>
+    </div>
+</body>
+</html>

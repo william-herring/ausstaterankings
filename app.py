@@ -47,8 +47,11 @@ def index():
     if result_type == 'average':
         rank = 1
         for r in results:
+            is_draw = False
+            if rank > 1:
+                is_draw = parsed_results[rank - 2]['time'] == r.average
             parsed_results.append({
-                'rank': rank,
+                'rank': rank if not is_draw else parsed_results[rank - 2]['rank'],
                 'name': r.person.name,
                 'wca_id': r.person.wca_id,
                 'time': r.average
@@ -57,8 +60,11 @@ def index():
     else:
         rank = 1
         for r in results:
+            is_draw = False
+            if rank > 1:
+                is_draw = parsed_results[rank - 2]['time'] == r.single
             parsed_results.append({
-                'rank': rank,
+                'rank': rank if not is_draw else parsed_results[rank - 2]['rank'],
                 'name': r.person.name,
                 'wca_id': r.person.wca_id,
                 'time': r.single

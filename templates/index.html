@@ -13,7 +13,7 @@
             overflow-x: hidden;
         }
         tr:nth-child(even) {
-            background-color: #e5e5e5;
+            background-color: #0f172a;
         }
         th {
             font-weight: normal;
@@ -22,12 +22,11 @@
         }
     </style>
 </head>
-<body>
-    <nav class="w-screen bg-white flex sticky top-0 items-center p-6 py-4 text-neutral-600 shadow-md">
-        <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State and Territory Speedcubing Rankings</a>
+<body class="bg-slate-900 text-white">
+    <nav class="w-screen z-50 bg-slate-900 flex sticky top-0 items-center justify-center px-10 py-4 text-neutral-200">
         <a href="/" class="mr-6 hover:underline">Rankings</a>
         <a href="/faq" class="mr-6 hover:underline">FAQ</a>
-        <a href="/kinch" class="hover:underline">Kinch</a>
+        <a href="/about" class="hover:underline">About</a>
         <div class="ml-auto">
             {% if session['user'] %}
             <a href="/preferences" class="flex items-center space-x-3 hover:underline">
@@ -35,17 +34,16 @@
                 <p>{{session['user']['name']}}</p>
             </a>
             {% else %}
-            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https://ausstaterankings.onrender.com/account-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
-                <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo.svg">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https%3A%2F%2Fausstaterankings.onrender.com%2Faccount-redirect&response_type=code&scope=" class="flex items-center font-semibold text-sm p-3 bg-emerald-600 rounded-lg hover:bg-emerald-700">
+                <img class="mr-3" height="20px" width="20px" src="https://assets.worldcubeassociation.org/assets/1dc28f5/packs/static/components/StaticPages/LogoImages/WCA%20Logo%20Only%20Positive%20Primary-de8bfbd9d4fde40ccc22.svg">
                 <p>Log in</p>
             </a>
             {% endif %}
         </div>
     </nav>
-    <div class="flex flex-col mt-16 justify-center items-center">
-        <div class="w-2/3">
-            <label class="text-neutral-600">State/Territory:</label>
-            <select class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg hover:bg-neutral-200" id="state" name="state" onchange="
+    <div class="flex flex-col mt-16 px-16">
+        <div class="">
+            <select class="p-2 text-sm text-neutral-600 shadow-sm border-2 rounded-lg mb-3 hover:bg-neutral-200" id="state" name="state" onchange="
             var params = new URLSearchParams(location.search);
             params.set('state', this.value);
             window.location.search = params.toString();">
@@ -58,9 +56,9 @@
                 <option {% if state == 'act' %}selected{% endif %} value="act">Australian Capital Territory</option>
                 <option {% if state == 'nt' %}selected{% endif %} value="nt">Northern Territory</option>
             </select>
-            <div class="flex text-neutral-500 text-2xl space-x-3 mb-3">
+            <div class="flex text-2xl space-x-3 mb-3">
             {% for event in ['333', '222', '444', '555', '666', '777', '333fm', '333oh', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '333bf', '444bf', '555bf'] %}
-                <button class="{{ 'text-black' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'hover:text-neutral-400'}}" onclick="
+                <button class="{{ 'opacity-100' if request.args.get('event') == event or request.args.get('event') == None and event == '333' else 'opacity-30 hover:opacity-60'}}" onclick="
                 var params = new URLSearchParams(location.search);
                 params.set('event', '{{event}}');
                 window.location.search = params.toString();">
@@ -68,15 +66,15 @@
                 </button>
             {% endfor %}
             </div>
-            <div class="flex space-x-3 mb-3">
+            <div class="flex space-x-3 font-semibold mb-6">
                 <div class="flex">
-                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'average' else 'bg-blue-700' }} shadow-sm rounded-l-lg hover:bg-blue-700" onclick="
+                    <button class="p-2 text-sm text-white {{ 'bg-emerald-600' if request.args.get('result_type') == 'average' else 'bg-emerald-700' }} shadow-sm rounded-l-lg hover:bg-emerald-700" onclick="
                     var params = new URLSearchParams(location.search);
                     params.set('result_type', 'single');
                     window.location.search = params.toString();">
                         Single
                     </button>
-                    <button class="p-2 text-sm text-white {{ 'bg-blue-600' if request.args.get('result_type') == 'single' or request.args.get('result_type') == None else 'bg-blue-700' }} shadow-sm rounded-r-lg hover:bg-blue-700" onclick="
+                    <button class="p-2 text-sm text-white {{ 'bg-emerald-600' if request.args.get('result_type') == 'single' or request.args.get('result_type') == None else 'bg-emerald-700' }} shadow-sm rounded-r-lg hover:bg-emerald-700" onclick="
                     var params = new URLSearchParams(location.search);
                     params.set('result_type', 'average');
                     window.location.search = params.toString();">
@@ -84,7 +82,7 @@
                     </button>
                 </div>
             </div>
-            <table class="w-full text-left">
+            <table class="w-full text-left bg-slate-800 rounded-lg">
                 <tr>
                     <th class="font-bold">#</th>
                     <th class="font-bold">Name</th>
@@ -94,7 +92,7 @@
                     {% for result in rankings %}
                         <tr class="font-normal">
                             <th>{{result['rank']}}</th>
-                            <th class="text-orange-700"><a href="/person/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th class="hover:underline"><a href="/person/{{result['wca_id']}}">{{result['name']}}</a></th>
                             <th>{{ result['time']|int }}</th>
                         </tr>
                     {% endfor %}
@@ -102,17 +100,13 @@
                     {% for result in rankings %}
                         <tr class="font-normal">
                             <th>{{result['rank']}}</th>
-                            <th class="text-orange-700"><a href="/person/{{result['wca_id']}}">{{result['name']}}</a></th>
+                            <th class="hover:underline"><a href="/person/{{result['wca_id']}}">{{result['name']}}</a></th>
                             <th>{{ "%.2f"|format(result['time'] * 0.01) if result['time'] * 0.01 < 60 else (result['time'] * 0.01 / 60)|round(0, 'floor')|int ~ ':' ~ "%.2f"|format((result['time'] * 0.01 / 60 % 1 * 60)) }}</th>
                         </tr>
                     {% endfor %}
                 {% endif %}
             </table>
         </div>
-    </div>
-    <div class="p-6 text-neutral-600 flex space-x-4 justify-end w-screen bg-red">
-        <p>© William Herring 2023</p>
-        <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
     </div>
 </body>
 </html>

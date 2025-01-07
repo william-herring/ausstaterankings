@@ -72,6 +72,10 @@ def index():
 def faq():
     return render_template('faq.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/person/<wca_id>')
 def profile(wca_id):
     person = Person.query.filter(Person.wca_id == wca_id).first()
@@ -99,8 +103,16 @@ def preferences():
 @app.route('/update-prefs', methods=['POST'])
 def update_preferences():
     person = Person.query.filter(Person.wca_id == session['user']['wca_id']).first()
+    # Update state
     person.state = request.json['state']
+    # Update name, country and avatar
+    user_data = requests.get(f'https://www.worldcubeassociation.org/api/v0/persons/{person.wca_id}').json()
+    person.name = user_data['person']['name']
+    person.country = user_data['person']['country']['iso2']
+    person.avatar = user_data['person']['avatar']['thumb_url']
+
     db.session.commit()
+
     return f"Preferences updated for user {person.wca_id}", 200
 
 

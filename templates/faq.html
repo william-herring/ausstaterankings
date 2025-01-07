@@ -19,11 +19,11 @@
         }
     </style>
 </head>
-<body>
-    <nav class="w-screen fixed flex items-center p-6 py-4 text-neutral-600 shadow-md">
-        <a href="/" class="font-medium text-lg text-blue-700 mr-10">Australian State and Territory Speedcubing Rankings</a>
+<body class="bg-slate-900 text-white">
+    <nav class="w-screen z-50 bg-slate-900 flex sticky top-0 items-center justify-center px-10 py-4 text-neutral-200">
         <a href="/" class="mr-6 hover:underline">Rankings</a>
-        <a href="/faq" class="hover:underline">FAQ</a>
+        <a href="/faq" class="mr-6 hover:underline">FAQ</a>
+        <a href="/about" class="hover:underline">About</a>
         <div class="ml-auto">
             {% if session['user'] %}
             <a href="/preferences" class="flex items-center space-x-3 hover:underline">
@@ -31,18 +31,18 @@
                 <p>{{session['user']['name']}}</p>
             </a>
             {% else %}
-            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https://ausstaterankings.onrender.com/account-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center space-x-2 text-sm p-2 bg-neutral-200 rounded-full hover:bg-neutral-300">
-                <img height="20px" width="20px" src="https://www.worldcubeassociation.org/files/WCAlogo.svg">
+            <a href="https://www.worldcubeassociation.org/oauth/authorize?client_id=-dBHer2N8UaYuk0qxjmNhT7xlpXM4I5UsZCLEGf7cfQ&redirect_uri=https://ausstaterankings.onrender.com/account-redirect%3FredirectUrl%3D%2F&response_type=code&scope=" class="flex items-center font-semibold text-sm p-3 bg-emerald-600 rounded-lg hover:bg-emerald-700">
+                <img class="mr-3" height="20px" width="20px" src="https://assets.worldcubeassociation.org/assets/1dc28f5/packs/static/components/StaticPages/LogoImages/WCA%20Logo%20Only%20Positive%20Primary-de8bfbd9d4fde40ccc22.svg">
                 <p>Log in</p>
             </a>
             {% endif %}
         </div>
     </nav>
-    <div class="flex flex-col h-screen justify-center items-center">
-        <div class="text-neutral-600 w-2/3">
+    <div class="flex flex-col justify-center items-center mt-24">
+        <div class="w-2/3">
             <h1 class="text-2xl font-bold mb-3">FAQ</h1>
             <h2 class="text-lg font-semibold">Why can't I see my results?</h2>
-            <p>The WCA doesn't record your state/territory of residence, so you must log in to this site and set your state on preferences if you wish to see
+            <p>The WCA doesn't record your state/territory of residence, so you must log in to this site and set your state if you wish to see
             your state ranking. Some results are added by admins, but if you don't see yourself and expected to, please <a class="underline" href="/login">log in</a>.</p>
             <br>
             <h2 class="text-lg font-semibold">How do I change my state/territory?</h2>
@@ -54,16 +54,12 @@
             </a> and I will add you to the rankings.</p>
             <br>
             <h2 class="text-lg font-semibold">Why aren't the results up to date?</h2>
-            <p>To avoid querying the WCA database on every visit, results are updated every Wednesday. Generally, this will mean that results will be updated pretty soon after a competition's
-            results are uploaded to the WCA database. If not, don't stress; they will update soon.</p>
+            <p>To avoid querying the WCA database on every visit, results are updated in bulk automatically every Wednesday. This means that results are usually updated pretty soon after recent competitions' results have been uploaded. If results haven't updated and you are sure that they should have, </p>
+            <a class="underline" href="mailto:william.herring.au@gmail.com">email me</a>. <br>
             <br>
             <h2 class="text-lg font-semibold">How can I help?</h2>
             <p>This site is completely open-source. If you have any suggestions or improvements and are familiar with Flask and/or the WCA API, check out the <a class="underline" href="https://github.com/william-herring/ausstaterankings">GitHub repository</a>.</p>
         </div>
-    </div>
-    <div class="p-6 text-neutral-600 flex space-x-4 justify-end absolute bottom-0 w-screen bg-red">
-        <p>© William Herring 2023</p>
-        <a class="hover:underline" href="https://github.com/william-herring/ausstaterankings">GitHub</a>
     </div>
 </body>
 </html>
